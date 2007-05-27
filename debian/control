@@ -1,0 +1,12 @@
+Source: maven-ant-helper
+Section: devel
+Priority: extra
+Maintainer: Trygve Laugstøl <trygvis@inamo.no>
+Build-Depends: debhelper (>= 5)
+Standards-Version: 3.7.2
+
+Package: maven-ant-helper
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>

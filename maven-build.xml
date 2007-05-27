@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+
+<project name="pkg-java" default="package" basedir="..">
+
+    <target name="init">
+        <available property="available.sources" file="src/main/java"/>
+        <available property="available.resources" file="src/main/resources"/>
+
+        <fail unless="artifactId" message="Missing required property: artifactId"/>
+        <fail unless="version" message="Missing required property: version"/>
+
+        <echo message="available.sources: ${available.sources}"/>
+        <echo message="available.resources: ${available.resources}"/>
+        <echo message="Compile classpath: ${classpath.full.compile}" />
+        <echo message="Test classpath: ${classpath.full.test}" />
+    </target>
+
+    <!--
+     | LIFECYCLE: Clean
+     |-->
+
+    <target name="clean">
+        <delete dir="${build.directory}"/>
+    </target>
+
+    <!--
+     | LIFECYCLE: jar
+     |
+     | This mimics the default Maven build life-cycle: http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+     |-->
+
+     <target name="process-resources" depends="init" if="available.resources">
+        <mkdir dir="${build.outputDirectory}"/>
+        <copy todir="${build.outputDirectory}">
+            <fileset dir="src/main/resources"/>
+        </copy>
+     </target>
+
+    <target name="compile" depends="process-resources">
+        <mkdir dir="${build.outputDirectory}"/>
+        <javac
+            destdir="${build.outputDirectory}"
+            classpath="${classpath.compile}"
+            debug="on">
+            <srcdir dir="${build.sourceDirectory}"/>
+            <srcdir dir="${build.outputDirectory}/generated-sources"/>
+        </javac>
+    </target>
+
+    <target name="process-test-resources" depends="compile" unless="maven.test.skip">
+        <mkdir dir="${build.testOutputDirectory}"/>
+        <copy todir="${build.testOutputDirectory}">
+            <fileset dir="src/test/resources"/>
+        </copy>
+     </target>
+
+    <target name="test-compile" depends="process-test-resources" unless="maven.test.skip">
+        <mkdir dir="${build.testOutputDirectory}"/>
+        <javac
+            destdir="${build.testOutputDirectory}"
+            classpath="${classpath.full.test}"
+            debug="on">
+            <srcdir dir="${build.testSourceDirectory}"/>
+        </javac>
+    </target>
+
+    <target name="test" depends="test-compile" unless="maven.test.skip">
+        <mkdir dir="${build.directory}/surefire-tests"/>
+        <junit printsummary="yes" haltonfailure="no" forkmode="once">
+            <classpath>
+                <pathelement path="${classpath.full.test}"/>
+            </classpath>
+
+            <formatter type="plain"/>
+<!--
+            <test name="my.test.TestCase" haltonfailure="no" outfile="result">
+                <formatter type="xml"/>
+            </test>
+-->
+            <batchtest fork="yes" todir="${build.directory}/surefire-tests">
+                <fileset dir="${build.testSourceDirectory}">
+                    <include name="**/*Test.java"/>
+                    <exclude name="**/Abstract*.java"/>
+                </fileset>
+            </batchtest>
+        </junit>
+    </target>
+
+    <target name="package" depends="test">
+<!--
+        <delete file="${jar}"/>
+
+        <mkdir dir="${build.directory}/META-INF/maven/org.codehaus.modello/modello-core" />
+        <copy file="./modello-core/pom.xml" todir="${build.directory}/META-INF/maven/org.codehaus.modello/modello-core" />
+-->
+        <jar jarfile="${build.directory}/${artifactId}-${version}.jar"
+            basedir="${build.outputDirectory}"/>
+    </target>
+
+    <!--
+     | Javaco
+     |-->
+
+    <target name="javadoc" depends="init">
+        <mkdir dir="${javadoc.dir}"/>
+        <javadoc 
+            packagenames="org.codehaus.*"
+            sourcepath="${build.sourceDirectory}"
+            destdir="${javadoc.dir}"
+            author="true"
+            version="true"
+            windowtitle="${package} API"
+            doctitle="${package} - ${version}"
+            classpath="${classpath.full.compile}" >
+        </javadoc>
+    </target>
+</project>
