@@ -33,7 +33,6 @@ public class ModelloTask extends Task {
         URL[] urls = new URL[] {
             new URL( "file:/usr/share/java/libplexus-utils.jar" ),
             new URL( "file:/usr/share/java/plexus-classworlds.jar" ),
-            new URL( "file:/usr/share/java/plexus-component-api.jar" ),
             new URL( "file:/usr/share/java/plexus-container-default.jar" ),
             new URL( "file:/usr/share/java/modello-core.jar" ),
             new URL( "file:/usr/share/java/modello-plugin-xml.jar" ),

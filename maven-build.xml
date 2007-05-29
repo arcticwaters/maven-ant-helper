@@ -3,14 +3,11 @@
 <project name="pkg-java" default="package" basedir="..">
 
     <target name="init">
-        <available property="available.sources" file="src/main/java"/>
         <available property="available.resources" file="src/main/resources"/>
 
         <fail unless="artifactId" message="Missing required property: artifactId"/>
         <fail unless="version" message="Missing required property: version"/>
 
-        <echo message="available.sources: ${available.sources}"/>
-        <echo message="available.resources: ${available.resources}"/>
         <echo message="Compile classpath: ${classpath.full.compile}" />
         <echo message="Test classpath: ${classpath.full.test}" />
     </target>
@@ -38,12 +35,15 @@
 
     <target name="compile" depends="process-resources">
         <mkdir dir="${build.outputDirectory}"/>
+        <mkdir dir="${build.directory}/generated-sources"/>
         <javac
             destdir="${build.outputDirectory}"
             classpath="${classpath.compile}"
+            nowarn="true"
+            source="1.4" target="1.4"
             debug="on">
-            <srcdir dir="${build.sourceDirectory}"/>
-            <srcdir dir="${build.outputDirectory}/generated-sources"/>
+            <src path="${build.sourceDirectory}"/>
+            <src path="${build.directory}/generated-sources"/>
         </javac>
     </target>
 
@@ -59,28 +59,26 @@
         <javac
             destdir="${build.testOutputDirectory}"
             classpath="${classpath.full.test}"
+            nowarn="true"
+            source="1.4" target="1.4"
             debug="on">
-            <srcdir dir="${build.testSourceDirectory}"/>
+            <src path="${build.testSourceDirectory}"/>
         </javac>
     </target>
 
     <target name="test" depends="test-compile" unless="maven.test.skip">
         <mkdir dir="${build.directory}/surefire-tests"/>
-        <junit printsummary="yes" haltonfailure="no" forkmode="once">
+        <junit printsummary="yes" haltonfailure="no">
             <classpath>
                 <pathelement path="${classpath.full.test}"/>
             </classpath>
 
             <formatter type="plain"/>
-<!--
-            <test name="my.test.TestCase" haltonfailure="no" outfile="result">
-                <formatter type="xml"/>
-            </test>
--->
-            <batchtest fork="yes" todir="${build.directory}/surefire-tests">
+            <batchtest>
                 <fileset dir="${build.testSourceDirectory}">
                     <include name="**/*Test.java"/>
-                    <exclude name="**/Abstract*.java"/>
+                    <exclude name="**/Abstract*"/>
+                    <exclude name="${maven.test.exclude}"/>
                 </fileset>
             </batchtest>
         </junit>
