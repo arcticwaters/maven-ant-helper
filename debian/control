@@ -2,7 +2,7 @@ Source: maven-ant-helper
 Section: devel
 Priority: extra
 Maintainer: Trygve Laugstøl <trygvis@inamo.no>
-Build-Depends: debhelper (>= 5)
+Build-Depends: debhelper (>= 5), java-gcj-compat-dev (>=1.0.65), ant
 Standards-Version: 3.7.2
 
 Package: maven-ant-helper
