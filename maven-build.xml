@@ -8,8 +8,8 @@
         <fail unless="artifactId" message="Missing required property: artifactId"/>
         <fail unless="version" message="Missing required property: version"/>
 
-        <echo message="Compile classpath: ${classpath.full.compile}" />
-        <echo message="Test classpath: ${classpath.full.test}" />
+        <echo message="Compile classpath: ${classpath.full.compile}"/>
+        <echo message="Test classpath: ${classpath.full.test}"/>
     </target>
 
     <!--
@@ -67,14 +67,14 @@
     </target>
 
     <target name="test" depends="test-compile" unless="maven.test.skip">
-        <mkdir dir="${build.directory}/surefire-tests"/>
-        <junit printsummary="yes" haltonfailure="no">
+        <mkdir dir="${build.directory}/test-output"/>
+        <junit printsummary="yes" haltonfailure="no"> <!--  fork="yes" forkmode="once" -->
             <classpath>
                 <pathelement path="${classpath.full.test}"/>
             </classpath>
 
             <formatter type="plain"/>
-            <batchtest>
+            <batchtest todir="${build.directory}/test-output">
                 <fileset dir="${build.testSourceDirectory}">
                     <include name="**/*Test.java"/>
                     <exclude name="**/Abstract*"/>
