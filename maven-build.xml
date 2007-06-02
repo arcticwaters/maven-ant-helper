@@ -96,10 +96,10 @@
     </target>
 
     <!--
-     | Javaco
+     | Javadoc
      |-->
 
-    <target name="javadoc" depends="init">
+    <target name="javadoc">
         <mkdir dir="${javadoc.dir}"/>
         <javadoc 
             packagenames="org.codehaus.*"
