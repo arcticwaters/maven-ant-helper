@@ -2,7 +2,7 @@ Source: maven-ant-helper
 Section: devel
 Priority: extra
 Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.org>
-Uploaders: Trygve Laugstøl <trygvis@inamo.no>
+Uploaders: Trygve Laugstøl <trygvis@inamo.no>, Paul Cager <paul-debian@home.paulcager.org>
 Build-Depends: debhelper (>= 5), java-gcj-compat-dev (>=1.0.65), ant
 Standards-Version: 3.7.2
 
@@ -10,6 +10,10 @@ Package: maven-ant-helper
 Architecture: all
 Section: devel
 Depends: ${shlibs:Depends}, ${misc:Depends}
+         libplexus-utils-java,
+         libplexus-classworlds-java,
+         libplexus-container-default-java,
+         libmodello-java
 Description: helper scripts for building Maven components with ant
  An environment that can be used to simplify the creation of Debian packages
  to support the Maven system. A "modello" ant task is also provided.

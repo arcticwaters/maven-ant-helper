@@ -19,6 +19,9 @@ public class ModelloTask extends Task {
         }
         catch( Exception e )
         {
+            // Temporary logging - until it's all working.
+            System.err.println("Exception: " + e);
+            e.printStackTrace();
             throw new BuildException( "Error while invoking Modello", e );
         }
         finally

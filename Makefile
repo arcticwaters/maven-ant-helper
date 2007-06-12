@@ -2,7 +2,7 @@ build: build/maven-ant-helper.jar
 
 build/maven-ant-helper.jar: $(wildcard src/main/java/*.java)
 	/usr/lib/jvm/java-gcj/bin/javac \
-		-cp /usr/share/java/ant.jar:/usr/share/java/modello-core.jar \
+		-cp /usr/share/java/ant.jar \
 		-d build/classes \
 		$(wildcard src/main/java/*.java)
 	jar cf build/maven-ant-helper.jar -C build/classes .
