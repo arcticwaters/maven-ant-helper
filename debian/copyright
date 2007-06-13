@@ -2,11 +2,28 @@ This is maven-ant-helper, written and maintained by Trygve Laugstøl <trygvis@in
 on Sun, 27 May 2007 03:30:35 +0200.
 
 The original source can always be found at:
-	ftp://ftp.debian.org/dists/unstable/main/source/
+    svn.debian.org/svn/pkg-java/trunk/maven-ant-helper
 
-Copyright Holder:  Trygve Laugstøl
+Author:
+    
+    Trygve Laugstøl <trygvis@inamo.no>
 
 License:
+ 
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+   
+        http://www.apache.org/licenses/LICENSE-2.0
+   
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+ 
+
+
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/

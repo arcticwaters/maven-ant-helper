@@ -1,5 +1,19 @@
+maven-ant-helper (2) unstable; urgency=low
+
+  * Initial public release (Closes: #428643)
+  
+  * Changes following review by Michael Koch:
+    - Copyright file changed to follow dh_make's format.
+    - Version number changed to single integer.
+    - Ported to CDBS format.
+    - Created ITP closed by this upload.
+
+  * Added brief usage notes in README.
+
+ -- Paul Cager <paul-debian@home.paulcager.org>  Wed, 13 Jun 2007 11:03:27 +0100
+
 maven-ant-helper (1.0) unstable; urgency=low
 
-  * Initial Release.
+  * Initial Release to pkg-java project.
 
  -- Trygve Laugstol <trygvis@inamo.no>  Sun, 27 May 2007 03:30:35 +0200

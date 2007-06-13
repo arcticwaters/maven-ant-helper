@@ -1,89 +1,22 @@
 #!/usr/bin/make -f
-# -*- makefile -*-
 
-# Uncomment this to turn on verbose mode.
-#export DH_VERBOSE=1
+include /usr/share/cdbs/1/rules/debhelper.mk
+include /usr/share/cdbs/1/class/ant.mk
+include /usr/share/cdbs/1/rules/simple-patchsys.mk
 
-CFLAGS = -Wall -g
+PACKAGE              := $(shell dpkg-parsechangelog | egrep '^Source:' | cut -f2 -d' ')
+VERSION              := $(shell dpkg-parsechangelog | egrep '^Version:' | cut -f2 -d' ')
+JAVA_HOME            := /usr/lib/jvm/java-gcj
+ANT_HOME             := /usr/share/ant
+DEB_JARS             := $(ANT_HOME)/lib/ant-launcher.jar $(ANT_HOME)/lib/ant-trax.jar xalan2 
+DEB_ANT_BUILD_TARGET := package
+DEB_ANT_BUILDFILE    := ./debian/build.xml
+DEB_ANT_ARGS         := -DartifactId=$(PACKAGE) -Dpackage=$(PACKAGE) -Dversion=$(VERSION) -propertyfile debian/build.properties
+SVN                  := http://svn.debian.org/svn/pkg-java/trunk/maven-ant-helper
 
-ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
-	CFLAGS += -O0
-else
-	CFLAGS += -O2
-endif
-
-configure: configure-stamp
-configure-stamp:
-	dh_testdir
-	# Add here commands to configure the package.
-
-	touch configure-stamp
-
-build: build-stamp
-
-build-stamp: configure-stamp 
-	dh_testdir
-
-	# Add here commands to compile the package.
-	$(MAKE)
-	#docbook-to-man debian/maven-ant-helper.sgml > maven-ant-helper.1
-
-	touch $@
-
-clean:
-	dh_testdir
-	dh_testroot
-	rm -f build-stamp configure-stamp
-
-	# Add here commands to clean up after the build process.
-	-$(MAKE) clean
-
-	dh_clean 
-
-install: build
-	dh_testdir
-	dh_testroot
-	dh_clean -k 
-	dh_installdirs
-
-	# Add here commands to install the package into debian/maven-ant-helper.
-	$(MAKE) DESTDIR=$(CURDIR)/debian/maven-ant-helper install
-
-
-# Build architecture-independent files here.
-binary-indep: build install
-# We have nothing to do by default.
-
-# Build architecture-dependent files here.
-binary-arch: build install
-	dh_testdir
-	dh_testroot
-	dh_installchangelogs 
-	dh_installdocs
-	dh_installexamples
-#	dh_install
-#	dh_installmenu
-#	dh_installdebconf	
-#	dh_installlogrotate
-#	dh_installemacsen
-#	dh_installpam
-#	dh_installmime
-#	dh_python
-#	dh_installinit
-#	dh_installcron
-#	dh_installinfo
-#	dh_installman
-#	dh_link
-#	dh_strip
-#	dh_compress
-	dh_fixperms
-#	dh_perl
-#	dh_makeshlibs
-	dh_installdeb
-	dh_shlibdeps
-	dh_gencontrol
-	dh_md5sums
-	dh_builddeb
-
-binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install configure
+binary-post-install/$(PACKAGE)::
+	dh_install build/$(PACKAGE)-$(VERSION).jar usr/share/java
+	dh_link usr/share/java/$(PACKAGE)-$(VERSION).jar usr/share/java/$(PACKAGE).jar
+	dh_installdirs -A usr/share/maven-ant-helper
+	dh_install maven-build.xml usr/share/maven-ant-helper
+	dh_install maven-defaults.properties usr/share/maven-ant-helper
