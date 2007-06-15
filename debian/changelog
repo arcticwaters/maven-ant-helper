@@ -1,3 +1,10 @@
+maven-ant-helper (3) unstable; urgency=low
+
+  * Changed "Depends: libmodello-java" to a "Recommends".
+    - Some clients may not use the Modello Ant task.
+
+ -- Paul Cager <paul-debian@home.paulcager.org>  Fri, 15 Jun 2007 21:53:48 +0100
+
 maven-ant-helper (2) unstable; urgency=low
 
   * Initial public release (Closes: #428643)

@@ -10,7 +10,7 @@ Standards-Version: 3.7.2
 Package: maven-ant-helper
 Architecture: all
 Section: devel
-Depends: libmodello-java
+Recommends: libmodello-java
 Description: helper scripts for building Maven components with ant
  An environment that can be used to simplify the creation of Debian packages
  to support the Maven system. A "modello" ant task is also provided.
