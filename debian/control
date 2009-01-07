@@ -5,7 +5,10 @@ Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.or
 Uploaders: Trygve Laugstøl <trygvis@inamo.no>, Paul Cager <paul-debian@home.paulcager.org>, Torsten Werner <twerner@debian.org>
 Build-Depends: ant, debhelper (>= 5), cdbs (>= 0.4.5.3)
 Build-Depends-Indep: java-gcj-compat-dev (>=1.0.65), ant-optional
-Standards-Version: 3.7.2
+Standards-Version: 3.8.0
+Vcs-Svn: svn://svn.debian.org/svn/pkg-java/trunk/maven-ant-helper
+Vcs-Browser: http://svn.debian.org/wsvn/pkg-java/trunk/maven-ant-helper/
+Homepage: http://svn.debian.org/wsvn/pkg-java/trunk/maven-ant-helper
 
 Package: maven-ant-helper
 Architecture: all
@@ -14,5 +17,3 @@ Recommends: libmodello-java (>= 1.0-alpha-21-1)
 Description: helper scripts for building Maven components with ant
  An environment that can be used to simplify the creation of Debian packages
  to support the Maven system. A "modello" ant task is also provided.
- .
-  Homepage: http://svn.debian.org/wsvn/pkg-java/trunk/maven-ant-helper
