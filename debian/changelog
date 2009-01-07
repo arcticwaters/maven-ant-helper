@@ -1,3 +1,10 @@
+maven-ant-helper (4) experimental; urgency=low
+
+  * Update modello ant task to support the new modello package.
+  * Add myself to Uploaders.
+
+ -- Torsten Werner <twerner@debian.org>  Fri, 05 Dec 2008 12:18:27 +0100
+
 maven-ant-helper (3) unstable; urgency=low
 
   * Changed "Depends: libmodello-java" to a "Recommends".

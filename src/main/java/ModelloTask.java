@@ -50,13 +50,23 @@ public class ModelloTask extends Task {
         log( "Running the '" + plugin + "' Modello plugin using model file " + model + " for version " + version );
 
         URL[] urls = new URL[] {
-            new URL( "file:/usr/share/java/libplexus-utils.jar" ),
             new URL( "file:/usr/share/java/plexus-utils.jar" ),
             new URL( "file:/usr/share/java/plexus-classworlds.jar" ),
-            new URL( "file:/usr/share/java/plexus-container-default.jar" ),
+            new URL( "file:/usr/share/java/plexus-container-default-1.0.jar" ),
             new URL( "file:/usr/share/java/modello-core.jar" ),
+            new URL( "file:/usr/share/java/modello-plugin-converters.jar" ),
+            new URL( "file:/usr/share/java/modello-plugin-dom4j.jar" ),
+            new URL( "file:/usr/share/java/modello-plugin-jdom.jar" ),
+            new URL( "file:/usr/share/java/modello-plugin-jpox.jar" ),
+            new URL( "file:/usr/share/java/modello-plugin-plexus-registry.jar" ),
+            new URL( "file:/usr/share/java/modello-plugin-stax.jar" ),
+            new URL( "file:/usr/share/java/modello-plugin-store.jar" ),
+            new URL( "file:/usr/share/java/modello-plugin-xdoc.jar" ),
             new URL( "file:/usr/share/java/modello-plugin-xml.jar" ),
             new URL( "file:/usr/share/java/modello-plugin-xpp3.jar" ),
+            new URL( "file:/usr/share/java/modello-plugin-xsd.jar" ),
+            new URL( "file:/usr/share/java/google-collect.jar" ),
+            new URL( "file:/usr/share/java/xbean-reflect.jar" ),
         };
 
         ClassLoader cl = new URLClassLoader( urls );
