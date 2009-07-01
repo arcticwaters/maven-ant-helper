@@ -1,3 +1,25 @@
+maven-ant-helper (5) unstable; urgency=low
+
+  * Change section to java, bump up Standards-Version: 3.8.1.
+  * Add myself to uploaders
+  * Add a Build-Depends-Indep dependency on ${misc:Depends}
+  * Fix ModelloTask to work with modello >= 1.0, add new properties
+    useJava5 and encoding. 
+  * maven-build.xml: add build.javaVersion property to allow
+    building Java 1.5 sources with this script, defaults to 1.4,
+    fix javadoc target to use any packages under the current sources
+  * Change the dependency on java-gcj to default-jdk (Closes: #526298)
+  * Support optional source folders
+  * Use maven-repo-helper to clean and include the pom information
+    into the META-INF folder, as Maven does
+  * Add support for running Maven plugins without using the full Maven
+    program. Great for building core Maven plugins used in the Maven
+    build itself.
+  * Add Recommends on libmaven2-core-java and maven-repo-helper as those
+    are used in optional parts of maven-build.xml
+
+ -- Ludovic Claude <ludovic.claude@laposte.net>  Mon, 30 Mar 2009 18:11:32 +0100
+
 maven-ant-helper (4) experimental; urgency=low
 
   * Update modello ant task to support the new modello package.

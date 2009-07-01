@@ -1,6 +1,7 @@
 import java.lang.reflect.*;
 import java.io.*;
 import java.net.*;
+import java.util.*;
 import org.apache.tools.ant.*;
 
 /*
@@ -25,6 +26,9 @@ public class ModelloTask extends Task {
     private String output;
     private String version;
     private boolean packageWithVersion;
+    private boolean useJava5;
+    private String encoding = "UTF-8";
+    private List classpath = new ArrayList();
 
     public void execute() throws BuildException {
         ClassLoader cl = Thread.currentThread().getContextClassLoader();
@@ -46,30 +50,42 @@ public class ModelloTask extends Task {
         }
     }
 
+    private void addToClassPath(String jar) throws Exception {
+        if (! new File(jar).exists()) {
+            System.err.println("Cannot find file " + jar);
+			System.exit(1);
+        }
+        classpath.add(new URL( "file:" + jar));
+    }
+
+    private URL[] getClassPath() {
+        return (URL[]) classpath.toArray(new URL[classpath.size()]);
+    }
+
     private void work() throws Exception {
         log( "Running the '" + plugin + "' Modello plugin using model file " + model + " for version " + version );
 
-        URL[] urls = new URL[] {
-            new URL( "file:/usr/share/java/plexus-utils.jar" ),
-            new URL( "file:/usr/share/java/plexus-classworlds.jar" ),
-            new URL( "file:/usr/share/java/plexus-container-default-1.0.jar" ),
-            new URL( "file:/usr/share/java/modello-core.jar" ),
-            new URL( "file:/usr/share/java/modello-plugin-converters.jar" ),
-            new URL( "file:/usr/share/java/modello-plugin-dom4j.jar" ),
-            new URL( "file:/usr/share/java/modello-plugin-jdom.jar" ),
-            new URL( "file:/usr/share/java/modello-plugin-jpox.jar" ),
-            new URL( "file:/usr/share/java/modello-plugin-plexus-registry.jar" ),
-            new URL( "file:/usr/share/java/modello-plugin-stax.jar" ),
-            new URL( "file:/usr/share/java/modello-plugin-store.jar" ),
-            new URL( "file:/usr/share/java/modello-plugin-xdoc.jar" ),
-            new URL( "file:/usr/share/java/modello-plugin-xml.jar" ),
-            new URL( "file:/usr/share/java/modello-plugin-xpp3.jar" ),
-            new URL( "file:/usr/share/java/modello-plugin-xsd.jar" ),
-            new URL( "file:/usr/share/java/google-collect.jar" ),
-            new URL( "file:/usr/share/java/xbean-reflect.jar" ),
-        };
+        addToClassPath("/usr/share/java/plexus-build-api.jar");
+        addToClassPath("/usr/share/java/plexus-utils.jar");
+        addToClassPath("/usr/share/java/plexus-classworlds.jar");
+        addToClassPath("/usr/share/java/plexus-container-default.jar");
+        addToClassPath("/usr/share/java/modello-core.jar");
+        addToClassPath("/usr/share/java/modello-plugin-converters.jar");
+        addToClassPath("/usr/share/java/modello-plugin-dom4j.jar");
+        addToClassPath("/usr/share/java/modello-plugin-java.jar");
+        addToClassPath("/usr/share/java/modello-plugin-jdom.jar");
+            // new URL( "file:/usr/share/java/modello-plugin-jpox.jar");
+            // new URL( "file:/usr/share/java/modello-plugin-plexus-registry.jar");
+        addToClassPath("/usr/share/java/modello-plugin-stax.jar");
+            // new URL( "file:/usr/share/java/modello-plugin-store.jar");
+        addToClassPath("/usr/share/java/modello-plugin-xdoc.jar");
+        addToClassPath("/usr/share/java/modello-plugin-xml.jar");
+        addToClassPath("/usr/share/java/modello-plugin-xpp3.jar");
+        addToClassPath("/usr/share/java/modello-plugin-xsd.jar");
+        addToClassPath("/usr/share/java/google-collections.jar");
+        addToClassPath("/usr/share/java/xbean-reflect.jar");
 
-        ClassLoader cl = new URLClassLoader( urls );
+        ClassLoader cl = new URLClassLoader( getClassPath() );
 
         Thread.currentThread().setContextClassLoader( cl );
 
@@ -78,11 +94,21 @@ public class ModelloTask extends Task {
             plugin,
             output,
             version,
-            Boolean.toString( packageWithVersion )};
+            Boolean.toString( packageWithVersion ),
+            Boolean.toString( useJava5 ),
+            encoding};
 
-        Class modelloCli = cl.loadClass( "org.codehaus.modello.ModelloCli" );
-        Method main = modelloCli.getMethod( "main", new Class[] { String[].class } );
-        main.invoke( null, new Object[] { args } );
+		try {
+	        Class modelloCli = cl.loadClass( "org.codehaus.modello.ModelloCli" );
+	        Method main = modelloCli.getMethod( "main", new Class[] { String[].class } );
+	        main.invoke( null, new Object[] { args } );
+		} catch (Error e) {
+			e.printStackTrace();
+			throw e;
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			throw e;
+		}
     }
 
     public void setModel( String model ) {
@@ -104,4 +130,13 @@ public class ModelloTask extends Task {
     public void setPackageWithVersion( boolean packageWithVersion ) {
         this.packageWithVersion = packageWithVersion;
     }
+
+    public void setUseJava5( boolean useJava5 ) {
+        this.useJava5 = useJava5;
+    }
+
+    public void setEncoding( String encoding ) {
+        this.encoding = encoding;
+    }
+
 }
