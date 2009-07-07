@@ -47,6 +47,7 @@
     <property name="project.dir" value="" />
     <property file="${debian.dir}/build.properties"/>
     <property file="/usr/share/maven-ant-helper/maven-defaults.properties"/>
+    <property name="xml-output-factory" value="com.bea.xml.stream.XMLOutputFactoryBase" />
 
     <target name="init.pom">
         <condition property="use-local-repo" value="true">
@@ -66,6 +67,15 @@
         <echo message="Base dir is ${basedir}" />
         <echo message="Pom name in ${bin.package}.poms: ${pom.name}" />
         <echo message="Pom file ${pom.file} available? ${available.pom}" />
+
+        <path id="repo-helper.classpath">
+          <fileset dir="/usr/share/maven-repo">
+            <include name="org/debian/maven/maven-repo-helper/debian/maven-repo-helper-debian.jar" />
+            <include name="stax/stax-api/debian/stax-api-debian.jar" />
+            <include name="stax/stax/debian/stax-debian.jar" />
+            <include name="xml-apis/xml-apis/debian/xml-apis-debian.jar" />
+          </fileset>
+        </path>
 
         <path id="maven.classpath">
           <pathelement location="/usr/share/maven-ant-helper/bootstrap"/>
@@ -139,8 +149,9 @@
         <echo message="Cleaning pom ${pom.loc}" />
 
         <java fork="true" dir="." 
-           classpath="/usr/share/maven-repo/org/debian/maven/maven-repo-helper/debian/maven-repo-helper-debian.jar"
            classname="org.debian.maven.repo.POMCleaner">
+           <classpath refid="repo-helper.classpath"/>
+           <sysproperty key="javax.xml.stream.XMLOutputFactory" value="${xml-output-factory}" />
            <arg value="-p${bin.package}" />
            <arg value="-r${debian.dir}/maven.rules" />
            <arg value="-i${debian.dir}/maven.publishedRules" />
@@ -209,7 +220,7 @@
       <attribute name="target"/>
       <sequential>
         <java fork="true" dir="." classname="org.apache.maven.cli.MavenCli" failonerror="true">
-          <jvmarg value="-Xmx256M"/>
+          <sysproperty value="-Xmx256M"/>
           <classpath refid="maven.classpath"/>
           <arg value="-Dmaven.test.skip"/>
           <arg value="--offline"/>
@@ -230,7 +241,7 @@
         </copy>
 
         <java fork="true" dir="." classname="org.apache.maven.cli.MavenCli" failonerror="true">
-          <jvmarg value="-Xmx256M"/>
+          <sysproperty value="-Xmx256M"/>
           <classpath refid="maven.classpath"/>
           <arg value="-Dmaven.test.skip"/>
           <arg value="--offline"/>
@@ -328,8 +339,9 @@
         <delete file="${pom.file}" />
         <echo message="Transform ${pom.file}" />
         <java fork="true" dir="." 
-           classpath="/usr/share/maven-repo/org/debian/maven/maven-repo-helper/debian/maven-repo-helper-debian.jar"
            classname="org.debian.maven.repo.POMCleaner">
+           <classpath refid="repo-helper.classpath"/>
+           <sysproperty key="javax.xml.stream.XMLOutputFactory" value="${xml-output-factory}" />
            <arg value="-p${bin.package}" />
            <arg value="-r${debian.dir}/maven.rules" />
            <arg value="-i${debian.dir}/maven.publishedRules" />
