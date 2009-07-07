@@ -18,4 +18,5 @@ binary-post-install/$(PACKAGE)::
 	dh_installdirs -A usr/share/maven-ant-helper
 	dh_install maven-build.xml usr/share/maven-ant-helper
 	dh_install maven-defaults.properties usr/share/maven-ant-helper
+	dh_install manifest.mf usr/share/maven-ant-helper
 	dh_install bootstrap usr/share/maven-ant-helper

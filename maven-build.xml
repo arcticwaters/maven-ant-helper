@@ -319,7 +319,8 @@
 
     <target name="jar" depends="test">
         <jar jarfile="${build.directory}/${artifactId}-${version}.jar"
-            basedir="${build.outputDirectory}"/>
+            basedir="${build.outputDirectory}"
+            manifest="${manifest}" />
     </target>
 
     <target name="mvn-package" depends="jar" if="maven.package.target">
