@@ -1,3 +1,10 @@
+maven-ant-helper (6.2) unstable; urgency=low
+
+  * Fix a bug introduced by previous version. It was affecting
+    only the builds which execute a Maven plugin.
+
+ -- Ludovic Claude <ludovic.claude@laposte.net>  Wed, 08 Jul 2009 23:41:02 +0100
+
 maven-ant-helper (6.1) unstable; urgency=low
 
   * Provide a workaround to use gcj with maven-ant-helper
