@@ -47,6 +47,7 @@
     <property name="project.dir" value="" />
     <property file="${debian.dir}/build.properties"/>
     <property file="/usr/share/maven-ant-helper/maven-defaults.properties"/>
+    <property name="xml-input-factory" value="com.bea.xml.stream.MXParserFactory" />
     <property name="xml-output-factory" value="com.bea.xml.stream.XMLOutputFactoryBase" />
 
     <target name="init.pom">
@@ -151,6 +152,7 @@
         <java fork="true" dir="." 
            classname="org.debian.maven.repo.POMCleaner">
            <classpath refid="repo-helper.classpath"/>
+           <sysproperty key="javax.xml.stream.XMLInputFactory" value="${xml-input-factory}" />
            <sysproperty key="javax.xml.stream.XMLOutputFactory" value="${xml-output-factory}" />
            <arg value="-p${bin.package}" />
            <arg value="-r${debian.dir}/maven.rules" />
@@ -341,6 +343,7 @@
         <java fork="true" dir="." 
            classname="org.debian.maven.repo.POMCleaner">
            <classpath refid="repo-helper.classpath"/>
+           <sysproperty key="javax.xml.stream.XMLInputFactory" value="${xml-input-factory}" />
            <sysproperty key="javax.xml.stream.XMLOutputFactory" value="${xml-output-factory}" />
            <arg value="-p${bin.package}" />
            <arg value="-r${debian.dir}/maven.rules" />

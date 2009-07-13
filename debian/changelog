@@ -1,7 +1,9 @@
-maven-ant-helper (6.2) unstable; urgency=low
+maven-ant-helper (6.2) experimental; urgency=low
 
   * Fix a bug introduced by previous version. It was affecting
     only the builds which execute a Maven plugin.
+  * Add more workaround to use gcj with maven-ant-helper, this time
+    avoid using gnu xml stream when reading XML documents.
 
  -- Ludovic Claude <ludovic.claude@laposte.net>  Wed, 08 Jul 2009 23:41:02 +0100
 
