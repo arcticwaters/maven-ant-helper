@@ -14,8 +14,10 @@ Homepage: http://svn.debian.org/wsvn/pkg-java/trunk/maven-ant-helper
 Package: maven-ant-helper
 Architecture: all
 Section: java
-Depends: ${misc:Depends}
-Recommends: libmodello-java (>= 1.0), libmaven2-core-java, maven-repo-helper
+Depends: ${misc:Depends}, ant, ant-optional
+Recommends: libmodello-java (>= 1.0), libmaven2-core-java, 
+ libmaven-plugin-tools-java, libplexus-component-metadata-java, 
+ maven-repo-helper 
 Description: helper scripts for building Maven components with ant
  An environment that can be used to simplify the creation of Debian packages
  to support the Maven system. A "modello" ant task is also provided.

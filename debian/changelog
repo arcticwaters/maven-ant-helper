@@ -1,3 +1,14 @@
+maven-ant-helper (6.3) experimental; urgency=low
+
+  * Add ant and ant-optional to Depends:
+  * Add more Suggest: packages (libmaven-plugin-plugin-java and
+    libplexus-components-metadata-java as they provide useful
+    Maven plugin often used in the build)
+  * Add support for linking generated Javadoc to other 
+    documented libraries.
+
+ -- Ludovic Claude <ludovic.claude@laposte.net>  Thu, 16 Jul 2009 22:34:35 +0100
+
 maven-ant-helper (6.2) experimental; urgency=low
 
   * Fix a bug introduced by previous version. It was affecting

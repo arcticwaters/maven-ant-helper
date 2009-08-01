@@ -32,6 +32,12 @@
           maven-build.xml with the restore-pom target (without the keep-cleaned-pom property set).
        use-local-repo: if set, then Maven will use a local repository copied from /usr/share/maven-repo into
           debian/tmp. This allows you to install some custom or intermediate artifacts, handy for multi modules builds.
+       dependency, dependency2, dependency3...: Give the name of the dependent packages. Those packages will be
+          used to form the links to the Javadoc APIs from the generated Javadoc. 
+          The links are of the form: file:///usr/share/doc/${dependency}/api
+          Up to 15 dependencies can be defined here. Example use:
+            dependency=libcommons-lang-java
+            dependency2=libcommons-logging-java
 
        If you provide a pom file to your project, or the project already contains a pom file,
        then it will be read. You need to add /usr/share/java/ant-nodeps.jar to the classpath
@@ -385,7 +391,23 @@
             <packageset dir="${build.sourceDirectory}" defaultexcludes="yes">
                 <include name="**"/>
             </packageset>
-
+            <link href="file:///usr/share/doc/openjdk-6-doc/api" />
+            <link href="file:///usr/share/doc/classpath-doc/api" />
+            <link href="file:///usr/share/doc/${dependency}/api" />
+            <link href="file:///usr/share/doc/${dependency2}/api" />
+            <link href="file:///usr/share/doc/${dependency3}/api" />
+            <link href="file:///usr/share/doc/${dependency4}/api" />
+            <link href="file:///usr/share/doc/${dependency5}/api" />
+            <link href="file:///usr/share/doc/${dependency6}/api" />
+            <link href="file:///usr/share/doc/${dependency7}/api" />
+            <link href="file:///usr/share/doc/${dependency8}/api" />
+            <link href="file:///usr/share/doc/${dependency9}/api" />
+            <link href="file:///usr/share/doc/${dependency10}/api" />
+            <link href="file:///usr/share/doc/${dependency11}/api" />
+            <link href="file:///usr/share/doc/${dependency12}/api" />
+            <link href="file:///usr/share/doc/${dependency13}/api" />
+            <link href="file:///usr/share/doc/${dependency14}/api" />
+            <link href="file:///usr/share/doc/${dependency15}/api" />
         </javadoc>
     </target>
 </project>
