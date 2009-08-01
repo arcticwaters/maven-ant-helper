@@ -372,12 +372,26 @@
  
     <target name="package" depends="jar,mvn-package,restore-pom" />
 
+    <macrodef name="prepare-package-list">
+       <attribute name="package" />
+       <sequential>
+         <mkdir dir="${build.directory}/@{package}" />
+         <copy todir="${build.directory}/@{package}"> 
+           <fileset dir="/usr/share/doc">
+             <include name="@{package}/api/package*list" />
+           </fileset>
+         </copy>
+         <gunzip src="/usr/share/doc/@{package}/api/package-list.gz" dest="${build.directory}/@{package}" /> 
+       </sequential>
+    </macrodef>
+
     <!--
      | Javadoc
      |-->
 
     <target name="javadoc">
         <mkdir dir="${javadoc.dir}"/>
+        <prepare-package-list package="openjdk-6-doc" />
         <javadoc 
             source="${build.javaVersion}"
             sourcepath="${build.sourceDirectory}"
@@ -391,7 +405,7 @@
             <packageset dir="${build.sourceDirectory}" defaultexcludes="yes">
                 <include name="**"/>
             </packageset>
-            <link href="file:///usr/share/doc/openjdk-6-doc/api" />
+            <link href="file:///usr/share/doc/openjdk-6-doc/api" packagelistLoc="${build.directory}/openjdk-6-doc" />
             <link href="file:///usr/share/doc/classpath-doc/api" />
             <link href="file:///usr/share/doc/${dependency}/api" />
             <link href="file:///usr/share/doc/${dependency2}/api" />

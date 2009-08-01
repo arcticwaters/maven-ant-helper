@@ -1,5 +1,6 @@
 maven-ant-helper (6.3) experimental; urgency=low
 
+  * Update Standards-Version to 3.8.2
   * Add ant and ant-optional to Depends:
   * Add more Suggest: packages (libmaven-plugin-plugin-java and
     libplexus-components-metadata-java as they provide useful
