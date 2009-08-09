@@ -1,3 +1,9 @@
+maven-ant-helper (6.4) unstable; urgency=low
+
+  * Upload to unstable.
+
+ -- Torsten Werner <twerner@debian.org>  Sun, 09 Aug 2009 13:04:01 +0200
+
 maven-ant-helper (6.3) experimental; urgency=low
 
   * Update Standards-Version to 3.8.2
