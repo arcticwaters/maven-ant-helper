@@ -1,3 +1,10 @@
+maven-ant-helper (6.5) unstable; urgency=low
+
+  * Add Build-Depends: openjdk-6-doc to fix build errors. (Closes: #543106,
+    #543112, #543115, #543116)
+
+ -- Torsten Werner <twerner@debian.org>  Sun, 23 Aug 2009 10:13:54 +0200
+
 maven-ant-helper (6.4) unstable; urgency=low
 
   * Upload to unstable.

@@ -14,7 +14,7 @@ Homepage: http://svn.debian.org/wsvn/pkg-java/trunk/maven-ant-helper
 Package: maven-ant-helper
 Architecture: all
 Section: java
-Depends: ${misc:Depends}, ant, ant-optional
+Depends: ${misc:Depends}, ant, ant-optional, openjdk-6-doc
 Recommends: libmodello-java (>= 1.0), libmaven2-core-java, 
  libmaven-plugin-tools-java, libplexus-component-metadata-java, 
  maven-repo-helper 
