@@ -6,7 +6,7 @@ Uploaders: Trygve Laugstøl <trygvis@inamo.no>, Paul Cager <paul-debian@home.pau
  Torsten Werner <twerner@debian.org>, Ludovic Claude <ludovic.claude@laposte.net>
 Build-Depends: debhelper (>= 5), cdbs (>= 0.4.5.3), default-jdk
 Build-Depends-Indep: ant, ant-optional
-Standards-Version: 3.8.2
+Standards-Version: 3.8.3
 Vcs-Svn: svn://svn.debian.org/svn/pkg-java/trunk/maven-ant-helper
 Vcs-Browser: http://svn.debian.org/wsvn/pkg-java/trunk/maven-ant-helper/
 Homepage: http://svn.debian.org/wsvn/pkg-java/trunk/maven-ant-helper
@@ -14,7 +14,7 @@ Homepage: http://svn.debian.org/wsvn/pkg-java/trunk/maven-ant-helper
 Package: maven-ant-helper
 Architecture: all
 Section: java
-Depends: ${misc:Depends}, ant, ant-optional, openjdk-6-doc
+Depends: ${misc:Depends}, ant, ant-optional
 Recommends: libmodello-java (>= 1.0), libmaven2-core-java, 
  libmaven-plugin-tools-java, libplexus-component-metadata-java, 
  maven-repo-helper 
