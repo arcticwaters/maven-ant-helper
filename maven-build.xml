@@ -381,7 +381,9 @@
              <include name="@{package}/api/package*list" />
            </fileset>
          </copy>
+         <!-- the file package-list is no longer compressed but leaving <gunzip/> here for backporting
          <gunzip src="/usr/share/doc/@{package}/api/package-list.gz" dest="${build.directory}/@{package}" /> 
+         -->
        </sequential>
     </macrodef>
 
