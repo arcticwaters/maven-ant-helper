@@ -1,3 +1,10 @@
+maven-ant-helper (6.8) unstable; urgency=low
+
+  * Use default-jdk-doc instead of openjdk-6-doc when linking
+    Javadoc files
+
+ -- Ludovic Claude <ludovic.claude@laposte.net>  Sun, 28 Mar 2010 21:55:57 +0200
+
 maven-ant-helper (6.7) unstable; urgency=low
 
   * Do no longer <gunzip/> the package-list file from openjdk-6-doc.
