@@ -5,8 +5,8 @@ Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.or
 Uploaders: Trygve Laugstøl <trygvis@inamo.no>, Paul Cager <paul-debian@home.paulcager.org>, 
  Torsten Werner <twerner@debian.org>, Ludovic Claude <ludovic.claude@laposte.net>
 Build-Depends: debhelper (>= 5), cdbs (>= 0.4.5.3), default-jdk
-Build-Depends-Indep: ant, ant-optional
-Standards-Version: 3.8.3
+Build-Depends-Indep: ant, ant-optional, ant-contrib
+Standards-Version: 3.9.1
 Vcs-Svn: svn://svn.debian.org/svn/pkg-java/trunk/maven-ant-helper
 Vcs-Browser: http://svn.debian.org/wsvn/pkg-java/trunk/maven-ant-helper/
 Homepage: http://svn.debian.org/wsvn/pkg-java/trunk/maven-ant-helper
@@ -14,10 +14,9 @@ Homepage: http://svn.debian.org/wsvn/pkg-java/trunk/maven-ant-helper
 Package: maven-ant-helper
 Architecture: all
 Section: java
-Depends: ${misc:Depends}, ant, ant-optional
-Recommends: libmodello-java (>= 1.0), libmaven2-core-java, 
- libmaven-plugin-tools-java, libplexus-component-metadata-java, 
- maven-repo-helper 
+Depends: ${misc:Depends}, ant, ant-optional, ant-contrib, maven-repo-helper
+Suggests: default-jdk-doc, libmodello-java (>= 1.0), libmaven2-core-java, 
+ libmaven-plugin-tools-java, libplexus-component-metadata-java
 Description: helper scripts for building Maven components with ant
  An environment that can be used to simplify the creation of Debian packages
  to support the Maven system. A "modello" ant task is also provided.

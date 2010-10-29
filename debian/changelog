@@ -1,3 +1,24 @@
+maven-ant-helper (7.0) UNRELEASED; urgency=low
+
+  * Update Standards-Version to 3.9.1, use source format 3.0 (native)  
+  * Use default-jdk-doc instead of openjdk-6-doc when linking
+    Javadoc files (Closes: #587361)
+  * d/control: add Suggests: default-jdk-doc, move all Recommends: to Suggest
+    as they are not needed except when Maven is called within the Ant build,
+    add maven-repo-helper to Depends as it's now always used from the jar task
+  * maven-build.xml: add -N option to Maven to avoid recursive actions,
+    reorder actions in mvn-package and give to the POMCleaner the location
+    of the local Maven repository which can be used when deciding when to
+    replace a parent version by a its symbolic version (fixes
+    maven-debian-helper build),
+    add local-install and package-and-local-install target to deal with
+    composite projects which need to install some of their build elements in
+    the local repository, for consuption by other parts of the build,
+    deprecate passing the 'version' variable to Ant as it's read from the POM file,
+    remove macro prepare-package-list, update paths to the JDK docs.
+ 
+ -- Ludovic Claude <ludovic.claude@laposte.net>  Thu, 14 Oct 2010 00:08:38 +0200
+
 maven-ant-helper (6.8) unstable; urgency=low
 
   * Use default-jdk-doc instead of openjdk-6-doc when linking

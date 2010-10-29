@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
-<project name="pkg-java" default="package" basedir=".">
+<project name="pkg-java" default="package" basedir="." xmlns:c="antlib:net.sf.antcontrib">
+    <taskdef uri="antlib:net.sf.antcontrib"
+            resource="net/sf/antcontrib/antlib.xml"
+            classpath="/usr/share/java/ant-contrib.jar"/>
 
     <!--
        maven-build.xml - an Ant build script that reproduces the Maven build life-cycle.
@@ -13,10 +16,7 @@
        package: the name of the source package. For example, use: 
            DEB_ANT_ARGS := -Dversion=$(DEB_SOURCE_PACKAGE) 
        bin.package: the name of the binary package. Defaults to lib${package}-java
-       version: the version of the project, used in the name of the jar. Prefer to use the Debian version 
-         here as it makes the rules file easier to write when the version contains alpha, beta or rc versions.
-         For example, use: 
-           DEB_ANT_ARGS := -Dversion=$(DEB_UPSTREAM_VERSION) 
+       version: DEPRECATED - the version of the project, used in the name of the jar. 
        debian.dir: the location of the debian directory. Defaults to ${basedir}/debian
        project.dir: the location of the current project. Defaults to ""
        pom.name: the name of the pom file. Must appear as it is in the debian/${bin.package}.poms file
@@ -31,7 +31,7 @@
        keep-cleaned-pom: if set, keeps the cleaned pom after packaging. If can be restored later by calling
           maven-build.xml with the restore-pom target (without the keep-cleaned-pom property set).
        use-local-repo: if set, then Maven will use a local repository copied from /usr/share/maven-repo into
-          debian/tmp. This allows you to install some custom or intermediate artifacts, handy for multi modules builds.
+          debian/.mh. This allows you to install some custom or intermediate artifacts, handy for multi modules builds.
        dependency, dependency2, dependency3...: Give the name of the dependent packages. Those packages will be
           used to form the links to the Javadoc APIs from the generated Javadoc. 
           The links are of the form: file:///usr/share/doc/${dependency}/api
@@ -69,7 +69,12 @@
             <equals arg1="" arg2="${project.dir}" />
         </condition>
         <property name="pom.file" value="${pom.name}" />
-        <available property="available.pom" file="${pom.file}"/>
+        <condition property="available.pom">
+            <and>
+                <available file="${debian.dir}/${bin.package}.poms"/>
+                <available file="${pom.file}"/>
+            </and>
+        </condition>
 
         <echo message="Base dir is ${basedir}" />
         <echo message="Pom name in ${bin.package}.poms: ${pom.name}" />
@@ -144,16 +149,15 @@
         <property name="cleaner.options" value=""/>
         <echo message="Cleaner options: ${cleaner.options}" />
 
-        <mkdir dir="${debian.dir}/tmp" /> 
+        <mkdir dir="${debian.dir}/.mh" /> 
         <delete>
-           <fileset dir="${debian.dir}/tmp">
+           <fileset dir="${debian.dir}/.mh">
               <include name="pom.xml" />
               <include name="pom.properties" />
            </fileset>
         </delete> 
 
         <property name="pom.loc" location="${pom.file}" />
-        <echo message="Cleaning pom ${pom.loc}" />
 
         <java fork="true" dir="." 
            classname="org.debian.maven.repo.POMCleaner">
@@ -163,20 +167,35 @@
            <arg value="-p${bin.package}" />
            <arg value="-r${debian.dir}/maven.rules" />
            <arg value="-i${debian.dir}/maven.publishedRules" />
+           <arg value="--maven-repo=${debian.dir}/.mh/maven-repo" />
            <arg value="--verbose" />
            <arg line="${cleaner.options} --keep-pom-version" />
            <arg value="${pom.loc}" />
-           <arg value="${debian.dir}/tmp/pom.xml" />
-           <arg value="${debian.dir}/tmp/pom.properties" />
+           <arg value="${debian.dir}/.mh/pom.xml" />
+           <arg value="${debian.dir}/.mh/pom.properties" />
         </java> 
         <copy file="${pom.file}" tofile="${pom.file}.save" />
         <!-- force the pom file to be located in the current dir, we'll need it when running Maven plugins -->
-        <copy file="${debian.dir}/tmp/pom.xml" tofile="${pom.file}" overwrite="true" />
-        <property file="${debian.dir}/tmp/pom.properties"/>
+        <copy file="${debian.dir}/.mh/pom.xml" tofile="${pom.file}" overwrite="true" />
+
+        <!-- Read groupId, artifactId, version from the POM file -->
+        <c:var name="groupId" unset="true" /> 
+        <c:var name="artifactId" unset="true" /> 
+        <c:var name="version" unset="true" /> 
+        <c:var name="debianVersion" unset="true" /> 
+        <c:var name="classifier" unset="true" /> 
+        <c:var name="type" unset="true" />
+        <property file="${debian.dir}/.mh/pom.properties"/>
+
+        <pathconvert property="groupPath">
+            <path location="${groupId}"/>
+            <filtermapper>
+                <replacestring from="." to="/"/>
+            </filtermapper>
+        </pathconvert>
 
         <echo message="Properties read from the POM file:" />
-        <echo message="  groupId: ${groupId}" />
-        <echo message="  artifactId: ${artifactId}" />
+        <echo message="  groupId: ${groupId}, artifactId: ${artifactId}, version: ${version}, debianVersion: ${debianVersion}" />
     </target>
 
     <target name="init" depends="read.pom">
@@ -217,7 +236,7 @@
     <target name="process-pom" depends="init" if="available.pom">
         <mkdir dir="${build.outputDirectory}/META-INF/maven/${groupId}/${artifactId}"/>
         <copy todir="${build.outputDirectory}/META-INF/maven/${groupId}/${artifactId}">
-            <fileset dir="${debian.dir}/tmp">
+            <fileset dir="${debian.dir}/.mh">
                <include name="pom.xml" />
                <include name="pom.properties" />
             </fileset>
@@ -234,6 +253,7 @@
           <arg value="--offline"/>
           <arg value="-e"/>
           <arg value="-B"/>
+          <arg value="-N"/>
           <arg value="-s${debian.dir}/maven-settings.xml"/>
           <arg value="@{target}"/>
         </java>
@@ -242,11 +262,14 @@
 
     <macrodef name="run-maven-local-repo">
       <attribute name="target"/>
+      <element name="before-maven" optional="true" />
       <sequential>
-        <mkdir dir="${debian.dir}/tmp/maven-repo" /> 
-        <copy todir="${debian.dir}/tmp/maven-repo">
+        <mkdir dir="${debian.dir}/.mh/maven-repo" /> 
+        <copy todir="${debian.dir}/.mh/maven-repo">
             <fileset dir="/usr/share/maven-repo" />
         </copy>
+
+        <before-maven/>
 
         <java fork="true" dir="." classname="org.apache.maven.cli.MavenCli" failonerror="true">
           <jvmarg value="-Xmx256M"/>
@@ -255,8 +278,9 @@
           <arg value="--offline"/>
           <arg value="-e"/>
           <arg value="-B"/>
+          <arg value="-N"/>
           <arg value="--offline"/>
-          <arg value="-Dmaven.repo.local=${debian.dir}/tmp/maven-repo"/>
+          <arg value="-Dmaven.repo.local=${debian.dir}/.mh/maven-repo"/>
           <arg value="@{target}"/>
         </java>
       </sequential>      
@@ -343,26 +367,22 @@
     </target>
 
     <target name="mvn-package" depends="jar" if="maven.package.target">
-        <!-- do a POM transform in order to keep important plugin configuration for Maven -->
-        <delete file="${pom.file}" />
-        <echo message="Transform ${pom.file}" />
-        <java fork="true" dir="." 
-           classname="org.debian.maven.repo.POMCleaner">
-           <classpath refid="repo-helper.classpath"/>
-           <sysproperty key="javax.xml.stream.XMLInputFactory" value="${xml-input-factory}" />
-           <sysproperty key="javax.xml.stream.XMLOutputFactory" value="${xml-output-factory}" />
-           <arg value="-p${bin.package}" />
-           <arg value="-r${debian.dir}/maven.rules" />
-           <arg value="-i${debian.dir}/maven.publishedRules" />
-           <arg value="--verbose" />
-           <arg value="--keep-all-elements" />
-           <arg line="${cleaner.options} --keep-pom-version" />
-           <arg value="${pom.file}.save" />
-           <arg value="${pom.file}" />
-           <arg value="${debian.dir}/tmp/pom.properties" />
-        </java> 
         <!-- Calls mvn ${maven.package.target} -->
         <run-maven-local-repo target="${maven.package.target}" />
+    </target>
+
+    <target name="local-install" depends="jar">
+        <mkdir dir="${debian.dir}/.mh/maven-repo/${groupPath}/${artifactId}/${version}" />
+        <copy file="${pom.file}" tofile="${debian.dir}/.mh/maven-repo/${groupPath}/${artifactId}/${version}/${artifactId}-${version}.pom" />
+        <c:if>
+          <or>
+            <equals arg1="${type}" arg2="jar" />
+            <equals arg1="${type}" arg2="bundle" />
+          </or>
+          <then>
+            <copy file="${build.directory}/${artifactId}-${version}.jar" todir="${debian.dir}/.mh/maven-repo/${groupPath}/${artifactId}/" />
+          </then>
+        </c:if>
     </target>
 
     <target name="restore-pom" depends="init.pom" unless="keep-cleaned-pom"> 
@@ -371,29 +391,14 @@
     </target>
  
     <target name="package" depends="jar,mvn-package,restore-pom" />
-
-    <macrodef name="prepare-package-list">
-       <attribute name="package" />
-       <sequential>
-         <mkdir dir="${build.directory}/@{package}" />
-         <copy todir="${build.directory}/@{package}"> 
-           <fileset dir="/usr/share/doc">
-             <include name="@{package}/api/package*list" />
-           </fileset>
-         </copy>
-         <!-- the file package-list is no longer compressed but leaving <gunzip/> here for backporting
-         <gunzip src="/usr/share/doc/@{package}/api/package-list.gz" dest="${build.directory}/@{package}" /> 
-         -->
-       </sequential>
-    </macrodef>
+    <target name="package-and-local-install" depends="package,local-install" />
 
     <!--
      | Javadoc
      |-->
 
-    <target name="javadoc">
+    <target name="javadoc" depends="read.pom">
         <mkdir dir="${javadoc.dir}"/>
-        <prepare-package-list package="openjdk-6-doc" />
         <javadoc 
             source="${build.javaVersion}"
             sourcepath="${build.sourceDirectory}"
@@ -407,8 +412,8 @@
             <packageset dir="${build.sourceDirectory}" defaultexcludes="yes">
                 <include name="**"/>
             </packageset>
-            <link href="file:///usr/share/doc/default-jdk-doc/api" packagelistLoc="${build.directory}/default-jdk-doc" />
-            <link href="file:///usr/share/doc/openjdk-6-doc/api" packagelistLoc="${build.directory}/openjdk-6-doc" />
+            <link href="file:///usr/share/doc/default-jdk-doc/api" packagelistLoc="/usr/share/doc/default-jdk/api/" />
+            <link href="file:///usr/share/doc/openjdk-6-doc/api" packagelistLoc="/usr/share/doc/openjdk-6/api/" />
             <link href="file:///usr/share/doc/classpath-doc/api" />
             <link href="file:///usr/share/doc/${dependency}/api" />
             <link href="file:///usr/share/doc/${dependency2}/api" />
