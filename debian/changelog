@@ -1,4 +1,4 @@
-maven-ant-helper (7.0) UNRELEASED; urgency=low
+maven-ant-helper (7.0) experimental; urgency=low
 
   * Update Standards-Version to 3.9.1, use source format 3.0 (native)  
   * Use default-jdk-doc instead of openjdk-6-doc when linking

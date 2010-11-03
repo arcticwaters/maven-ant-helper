@@ -134,9 +134,9 @@
 
         <loadfile srcfile="${debian.dir}/${bin.package}.poms" property="cleaner.options">
             <filterchain>
-               <linecontains>
-                   <contains value="${pom.name}" />
-               </linecontains>
+               <linecontainsregexp>
+                   <regexp pattern="^${pom.name}$" />
+               </linecontainsregexp>
                <tokenfilter>
                  <containsregex
                      pattern="[^ ]*(.*)"
@@ -158,6 +158,12 @@
         </delete> 
 
         <property name="pom.loc" location="${pom.file}" />
+        <c:if>
+            <not><equals arg1="pom.xml" arg2="${pom.name}"/></not>
+            <then>
+                <c:var name="cleaner.options" value="${cleaner.options} --keep-parent-version" />
+            </then>
+        </c:if>
 
         <java fork="true" dir="." 
            classname="org.debian.maven.repo.POMCleaner">
