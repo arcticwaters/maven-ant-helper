@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="pkg-java" default="package" basedir="." xmlns:c="antlib:net.sf.antcontrib">
+<project name="pkg-java" default="build-all" basedir="." xmlns:c="antlib:net.sf.antcontrib">
     <taskdef uri="antlib:net.sf.antcontrib"
             resource="net/sf/antcontrib/antlib.xml"
             classpath="/usr/share/java/ant-contrib.jar"/>
@@ -38,6 +38,7 @@
           Up to 15 dependencies can be defined here. Example use:
             dependency=libcommons-lang-java
             dependency2=libcommons-logging-java
+       javadoc.generate: if set, the default target (build-all) will build the project and generate the Javadoc
 
        If you provide a pom file to your project, or the project already contains a pom file,
        then it will be read. You need to add /usr/share/java/ant-nodeps.jar to the classpath
@@ -147,7 +148,6 @@
         </loadfile>
         <!-- default empty value -->
         <property name="cleaner.options" value=""/>
-        <echo message="Cleaner options: ${cleaner.options}" />
 
         <mkdir dir="${debian.dir}/.mh" /> 
         <delete>
@@ -164,6 +164,7 @@
                 <c:var name="cleaner.options" value="${cleaner.options} --keep-parent-version" />
             </then>
         </c:if>
+        <echo message="Cleaner options:${cleaner.options}" />
 
         <java fork="true" dir="." 
            classname="org.debian.maven.repo.POMCleaner">
@@ -398,6 +399,15 @@
  
     <target name="package" depends="jar,mvn-package,restore-pom" />
     <target name="package-and-local-install" depends="package,local-install" />
+
+    <target name="build-all" depends="package">
+        <c:if>
+            <isset property="generate.javadoc" />
+            <then>
+                <antcall target="javadoc" />
+            </then> 
+        </c:if>
+    </target>
 
     <!--
      | Javadoc

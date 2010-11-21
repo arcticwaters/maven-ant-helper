@@ -1,3 +1,10 @@
+maven-ant-helper (7.0ubuntu1~ppa1) maverick; urgency=low
+
+  * Add a default build-all target which can run the build and optionally
+    generate javadoc if generate.javadoc property is set
+
+ -- Ludovic Claude <ludovic.claude@laposte.net>  Mon, 22 Nov 2010 00:14:25 +0100
+
 maven-ant-helper (7.0) experimental; urgency=low
 
   * Update Standards-Version to 3.9.1, use source format 3.0 (native)  
