@@ -1,4 +1,4 @@
-maven-ant-helper (7.1) unstable; urgency=low
+maven-ant-helper (7.1) UNRELEASED; urgency=low
 
   * Add a default build-all target which can run the build and optionally
     generate javadoc if generate.javadoc property is set

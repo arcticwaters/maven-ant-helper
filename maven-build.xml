@@ -402,7 +402,7 @@
 
     <target name="build-all" depends="package">
         <c:if>
-            <isset property="generate.javadoc" />
+            <isset property="javadoc.generate" />
             <then>
                 <antcall target="javadoc" />
             </then> 
