@@ -404,7 +404,7 @@
         <c:if>
             <isset property="javadoc.generate" />
             <then>
-                <antcall target="javadoc" />
+                <antcall target="javadoc-jar" />
             </then> 
         </c:if>
     </target>
@@ -448,4 +448,18 @@
             <link href="file:///usr/share/doc/${dependency15}/api" />
         </javadoc>
     </target>
+
+    <target name="javadoc-jar" depends="javadoc">
+        <echoxml file="${build.directory}/${artifactId}.javadoc.pom">
+            <project>
+                <modelVersion>4.0.0</modelVersion>
+                <groupId>${groupId}</groupId>
+                <artifactId>${artifactId}</artifactId>
+                <version>${version}</version>
+            </project>
+        </echoxml>
+        <jar jarfile="${build.directory}/${artifactId}.javadoc.jar"
+            basedir="${javadoc.dir}" />
+    </target>
+
 </project>

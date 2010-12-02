@@ -1,7 +1,8 @@
-maven-ant-helper (7.1) UNRELEASED; urgency=low
+maven-ant-helper (7.1) experimental; urgency=low
 
+  * Add a javadoc-jar target which generates a jar file containing the javadoc
   * Add a default build-all target which can run the build and optionally
-    generate javadoc if generate.javadoc property is set
+    generate javadoc and its jar if generate.javadoc property is set
 
  -- Ludovic Claude <ludovic.claude@laposte.net>  Mon, 22 Nov 2010 00:14:25 +0100
 
