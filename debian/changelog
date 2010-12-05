@@ -1,10 +1,16 @@
 maven-ant-helper (7.1) experimental; urgency=low
 
+  [ Ludovic Claude ]
   * Add a javadoc-jar target which generates a jar file containing the javadoc
   * Add a default build-all target which can run the build and optionally
     generate javadoc and its jar if generate.javadoc property is set
 
- -- Ludovic Claude <ludovic.claude@laposte.net>  Mon, 22 Nov 2010 00:14:25 +0100
+  [ Damien Raude-Morvan ]
+  * d/rules: Remove simple-patchsys.mk since d/source/format is 3.0 (native).
+  * d/control, d/compat: Bump debhelper compat level to 7.
+  * d/control: Add myself as Uploaders.
+
+ -- Damien Raude-Morvan <drazzib@debian.org>  Sun, 05 Dec 2010 20:01:13 +0100
 
 maven-ant-helper (7.0) experimental; urgency=low
 
