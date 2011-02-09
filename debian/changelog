@@ -1,3 +1,9 @@
+maven-ant-helper (7.2) unstable; urgency=low
+
+  * Upload to unstable.
+
+ -- Torsten Werner <twerner@debian.org>  Wed, 09 Feb 2011 21:34:32 +0100
+
 maven-ant-helper (7.1) experimental; urgency=low
 
   [ Ludovic Claude ]
