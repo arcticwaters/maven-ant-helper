@@ -6,7 +6,7 @@ include /usr/share/cdbs/1/class/ant.mk
 PACKAGE              := $(shell dpkg-parsechangelog | egrep '^Source:' | cut -f2 -d' ')
 VERSION              := $(shell dpkg-parsechangelog | egrep '^Version:' | cut -f2 -d' ')
 JAVA_HOME            := /usr/lib/jvm/default-java
-DEB_JARS             := $(ANT_HOME)/lib/ant-launcher.jar $(ANT_HOME)/lib/ant-trax.jar xalan2 
+DEB_JARS             := $(ANT_HOME)/lib/ant-launcher.jar xalan2
 DEB_ANT_BUILD_TARGET := package
 DEB_ANT_BUILDFILE    := ./debian/build.xml
 DEB_ANT_ARGS         := -DartifactId=$(PACKAGE) -Dpackage=$(PACKAGE) -Dversion=$(VERSION) -propertyfile debian/build.properties

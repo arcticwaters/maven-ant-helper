@@ -1,3 +1,13 @@
+maven-ant-helper (7.3) unstable; urgency=low
+
+  * maven-build.xml: Fix read of properties in *.poms files by changing
+    regexp and set cleaner.options only if not already defined.
+    (Closes: #629894).
+  * debian/rules: Remove ant-trax from classpath (doesn't exist anymore since
+    Ant 1.8).
+
+ -- Damien Raude-Morvan <drazzib@debian.org>  Sun, 26 Jun 2011 19:14:05 +0200
+
 maven-ant-helper (7.2) unstable; urgency=low
 
   * Upload to unstable.

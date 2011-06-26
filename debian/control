@@ -5,9 +5,9 @@ Maintainer: Debian Java Maintainers <pkg-java-maintainers@lists.alioth.debian.or
 Uploaders: Trygve Laugstøl <trygvis@inamo.no>, Paul Cager <paul-debian@home.paulcager.org>, 
  Torsten Werner <twerner@debian.org>, Ludovic Claude <ludovic.claude@laposte.net>,
  Damien Raude-Morvan <drazzib@debian.org>
-Build-Depends: debhelper (>= 7), cdbs (>= 0.4.5.3), default-jdk
+Build-Depends: debhelper (>= 7), cdbs, default-jdk
 Build-Depends-Indep: ant, ant-optional, ant-contrib
-Standards-Version: 3.9.1
+Standards-Version: 3.9.2
 Vcs-Svn: svn://svn.debian.org/svn/pkg-java/trunk/maven-ant-helper
 Vcs-Browser: http://svn.debian.org/wsvn/pkg-java/trunk/maven-ant-helper/
 Homepage: http://svn.debian.org/wsvn/pkg-java/trunk/maven-ant-helper

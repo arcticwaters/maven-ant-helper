@@ -52,6 +52,7 @@
     <property name="bin.package" value="lib${package}-java" />
     <property name="debian.dir" value="${basedir}/debian" />
     <property name="project.dir" value="" />
+    <property name="debian.poms" value="${debian.dir}/${bin.package}.poms" />
     <property file="${debian.dir}/build.properties"/>
     <property file="/usr/share/maven-ant-helper/maven-defaults.properties"/>
     <property name="xml-input-factory" value="com.bea.xml.stream.MXParserFactory" />
@@ -72,13 +73,13 @@
         <property name="pom.file" value="${pom.name}" />
         <condition property="available.pom">
             <and>
-                <available file="${debian.dir}/${bin.package}.poms"/>
+                <available file="${debian.poms}"/>
                 <available file="${pom.file}"/>
             </and>
         </condition>
 
         <echo message="Base dir is ${basedir}" />
-        <echo message="Pom name in ${bin.package}.poms: ${pom.name}" />
+        <echo message="Pom name in ${debian.poms}: ${pom.name}" />
         <echo message="Pom file ${pom.file} available? ${available.pom}" />
 
         <path id="repo-helper.classpath">
@@ -133,10 +134,10 @@
     <!-- /usr/share/java/ant-nodeps.jar must be in the classpath -->
     <target name="read.pom" depends="init.pom" if="available.pom">
 
-        <loadfile srcfile="${debian.dir}/${bin.package}.poms" property="cleaner.options">
+        <loadfile srcfile="${debian.poms}" property="cleaner.options">
             <filterchain>
                <linecontainsregexp>
-                   <regexp pattern="^${pom.name}$" />
+                   <regexp pattern="^${pom.name}" />
                </linecontainsregexp>
                <tokenfilter>
                  <containsregex
@@ -146,8 +147,12 @@
                <striplinebreaks/>
             </filterchain>
         </loadfile>
-        <!-- default empty value -->
-        <property name="cleaner.options" value=""/>
+        <!-- Default value -->
+        <condition property="cleaner.options" value="">
+            <not>  
+                <isset property="cleaner.options"/>
+            </not>
+        </condition>
 
         <mkdir dir="${debian.dir}/.mh" /> 
         <delete>
