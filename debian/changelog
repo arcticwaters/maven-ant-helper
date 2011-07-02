@@ -1,4 +1,4 @@
-maven-ant-helper (7.4) unstable; urgency=low
+maven-ant-helper (7.4) UNRELEASED; urgency=low
 
   * process-test-resources now ignores Java files when copying
 
