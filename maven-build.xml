@@ -40,6 +40,9 @@
             dependency2=libcommons-logging-java
        javadoc.generate: if set, the default target (build-all) will build the project and generate the Javadoc
 
+       The properties can be defined also in debian/build.properties, and they will override properties
+       defined in /usr/share/maven-ant-helper/maven-defaults.properties.
+
        If you provide a pom file to your project, or the project already contains a pom file,
        then it will be read. You need to add /usr/share/java/ant-nodeps.jar to the classpath
        for this functionality to work.
@@ -337,7 +340,9 @@
     <target name="process-test-resources" depends="compile" if="available.testResources" unless="maven.test.skip">
         <mkdir dir="${build.testOutputDirectory}"/>
         <copy todir="${build.testOutputDirectory}">
-            <fileset dir="${build.testResourcesDirectory}"/>
+            <fileset dir="${build.testResourcesDirectory}">
+                <exclude name="**/*.java" />
+            </fileset>
         </copy>
      </target>
 

@@ -1,3 +1,9 @@
+maven-ant-helper (7.4) unstable; urgency=low
+
+  * process-test-resources now ignores Java files when copying
+
+ -- Ludovic Claude <ludovic.claude@laposte.net>  Sat, 02 Jul 2011 13:31:29 +0100
+
 maven-ant-helper (7.3) unstable; urgency=low
 
   * maven-build.xml: Fix read of properties in *.poms files by changing
