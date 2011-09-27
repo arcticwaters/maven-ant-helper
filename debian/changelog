@@ -1,8 +1,12 @@
 maven-ant-helper (7.4) unstable; urgency=low
 
+  [ Ludovic Claude ]
   * process-test-resources now ignores Java files when copying
 
- -- Ludovic Claude <ludovic.claude@laposte.net>  Sat, 02 Jul 2011 13:31:29 +0100
+  [ Torsten Werner ]
+  * Remove Trydge and Paul from Uploaders list.
+
+ -- Torsten Werner <twerner@debian.org>  Tue, 27 Sep 2011 17:38:59 +0200
 
 maven-ant-helper (7.3) unstable; urgency=low
 
