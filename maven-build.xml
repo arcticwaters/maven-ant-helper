@@ -358,7 +358,7 @@
         </javac>
     </target>
 
-    <target name="test" depends="test-compile" unless="maven.test.skip">
+    <target name="test" depends="test-compile" if="available.testSources" unless="maven.test.skip">
         <mkdir dir="${build.directory}/test-output"/>
         <junit printsummary="yes" haltonfailure="no"> <!--  fork="yes" forkmode="once" -->
             <sysproperty key="basedir" value="${basedir}"/>
