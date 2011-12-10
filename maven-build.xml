@@ -204,9 +204,12 @@
 
         <pathconvert property="groupPath">
             <path location="${groupId}"/>
-            <filtermapper>
-                <replacestring from="." to="/"/>
-            </filtermapper>
+            <mapper>
+            <chainedmapper>
+                <globmapper from="${basedir}/*" to="*" />
+                <unpackagemapper from="*" to="*"/>
+            </chainedmapper>
+            </mapper>
         </pathconvert>
 
         <echo message="Properties read from the POM file:" />
@@ -389,15 +392,20 @@
     </target>
 
     <target name="local-install" depends="jar">
-        <mkdir dir="${debian.dir}/.mh/maven-repo/${groupPath}/${artifactId}/${version}" />
-        <copy file="${pom.file}" tofile="${debian.dir}/.mh/maven-repo/${groupPath}/${artifactId}/${version}/${artifactId}-${version}.pom" />
+        <mkdir dir="${debian.dir}/.mh/maven-repo/${groupPath}/${artifactId}/${debianVersion}" />
+        <copy file="${pom.file}" tofile="${debian.dir}/.mh/maven-repo/${groupPath}/${artifactId}/${debianVersion}/${artifactId}-${debianVersion}.pom" />
         <c:if>
           <or>
             <equals arg1="${type}" arg2="jar" />
             <equals arg1="${type}" arg2="bundle" />
           </or>
           <then>
-            <copy file="${build.directory}/${artifactId}-${version}.jar" todir="${debian.dir}/.mh/maven-repo/${groupPath}/${artifactId}/" />
+              <copy todir="${debian.dir}/.mh/maven-repo/${groupPath}/${artifactId}/${debianVersion}/">
+                <fileset dir="${build.directory}">
+                    <include name="${artifactId}-${version}.jar"/>
+                </fileset>
+                <regexpmapper from="^(.*)-${version}.jar$$" to="\1-${debianVersion}.jar"/>
+              </copy>
           </then>
         </c:if>
     </target>

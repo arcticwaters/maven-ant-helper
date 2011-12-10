@@ -1,3 +1,9 @@
+maven-ant-helper (7.6) UNRELEASED; urgency=low
+
+  * Better handling of install in local-repo during build.
+
+ -- Damien Raude-Morvan <drazzib@debian.org>  Fri, 09 Dec 2011 22:39:40 +0100
+
 maven-ant-helper (7.5) unstable; urgency=low
 
   * Use Java 1.5 for compiling and source level compatibility
