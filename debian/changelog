@@ -1,8 +1,8 @@
-maven-ant-helper (7.6) UNRELEASED; urgency=low
+maven-ant-helper (7.6) unstable; urgency=low
 
-  * Better handling of install in local-repo during build.
+  * Better handling of install in local-repo during build (Closes: #652804).
 
- -- Damien Raude-Morvan <drazzib@debian.org>  Fri, 09 Dec 2011 22:39:40 +0100
+ -- Damien Raude-Morvan <drazzib@debian.org>  Thu, 29 Dec 2011 01:32:56 +0100
 
 maven-ant-helper (7.5) unstable; urgency=low
 
