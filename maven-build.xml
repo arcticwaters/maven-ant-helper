@@ -480,4 +480,18 @@
             basedir="${javadoc.dir}" />
     </target>
 
+    <target name="local-install-doc" depends="javadoc-jar">
+        <mkdir dir="${debian.dir}/.mh/maven-repo/${groupPath}/${artifactId}/${debianVersion}" />
+        <c:if>
+          <or>
+            <equals arg1="${type}" arg2="jar" />
+            <equals arg1="${type}" arg2="bundle" />
+          </or>
+          <then>
+              <copy tofile="${debian.dir}/.mh/maven-repo/${groupPath}/${artifactId}/${debianVersion}/${artifactId}.javadoc.jar"
+                file="${build.directory}/${artifactId}.javadoc.jar"/>
+          </then>
+        </c:if>
+    </target>
+
 </project>

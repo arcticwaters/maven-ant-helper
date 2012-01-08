@@ -1,3 +1,9 @@
+maven-ant-helper (7.7) UNRELEASED; urgency=low
+
+  * Add target local-install-doc to maven-build.xml
+
+ -- Ludovic Claude <ludovic.claude@laposte.net>  Sun, 08 Jan 2012 14:45:49 +0100
+
 maven-ant-helper (7.6) unstable; urgency=low
 
   * Better handling of install in local-repo during build (Closes: #652804).
