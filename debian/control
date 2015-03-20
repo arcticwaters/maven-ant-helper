@@ -15,8 +15,8 @@ Package: maven-ant-helper
 Architecture: all
 Section: java
 Depends: ${misc:Depends}, ant, ant-optional, ant-contrib, maven-repo-helper (>= 1.4)
-Suggests: default-jdk-doc, libmodello-java (>= 1.0), libmaven2-core-java, 
- libmaven-plugin-tools-java, libplexus-component-metadata-java
+Suggests: default-jdk-doc, libmodello-java (>= 1.0), maven,
+ libmaven-plugin-tools-java, libplexus-containers1.5-java
 Description: helper scripts for building Maven components with ant
  An environment that can be used to simplify the creation of Debian packages
  to support the Maven system. A "modello" ant task is also provided.

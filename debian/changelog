@@ -1,3 +1,9 @@
+maven-ant-helper (7.8) UNRELEASED; urgency=low
+
+  * Update suggests to Maven 3 dependencies
+
+ -- Andrew Schurman <arcticwaters@gmail.com>  Fri, 20 Mar 2015 00:39:43 -0700
+
 maven-ant-helper (7.7) unstable; urgency=low
 
   * Add target local-install-doc to maven-build.xml

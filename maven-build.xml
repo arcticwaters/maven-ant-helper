@@ -96,40 +96,8 @@
 
         <path id="maven.classpath">
           <pathelement location="/usr/share/maven-ant-helper/bootstrap"/>
-          <fileset dir="/usr/share/maven-repo">
-            <include name="backport-util-concurrent/backport-util-concurrent/debian/backport-util-concurrent-debian.jar"/>
-            <include name="classworlds/classworlds/debian/classworlds-debian.jar"/>
-            <include name="com/jcraft/jsch/debian/jsch-debian.jar"/>
-            <include name="commons-cli/commons-cli/debian/commons-cli-debian.jar"/>
-            <include name="junit/junit/debian/junit-debian.jar"/>
-            <include name="xml-apis/xml-apis/debian/xml-apis-debian.jar"/>
-            <include name="org/apache/maven/doxia/doxia-logging-api/debian/doxia-logging-api-debian.jar"/>
-            <include name="org/apache/maven/doxia/doxia-sink-api/debian/doxia-sink-api-debian.jar"/>
-            <include name="org/apache/maven/maven-artifact/debian/maven-artifact-debian.jar"/>
-            <include name="org/apache/maven/maven-artifact-manager/debian/maven-artifact-manager-debian.jar"/>
-            <include name="org/apache/maven/maven-core/debian/maven-core-debian.jar"/>
-            <include name="org/apache/maven/maven-error-diagnostics/debian/maven-error-diagnostics-debian.jar"/>
-            <include name="org/apache/maven/maven-model/debian/maven-model-debian.jar"/>
-            <include name="org/apache/maven/maven-monitor/debian/maven-monitor-debian.jar"/>
-            <include name="org/apache/maven/maven-plugin-api/debian/maven-plugin-api-debian.jar"/>
-            <include name="org/apache/maven/maven-plugin-descriptor/debian/maven-plugin-descriptor-debian.jar"/>
-            <include name="org/apache/maven/maven-plugin-parameter-documenter/debian/maven-plugin-parameter-documenter-debian.jar"/>
-            <include name="org/apache/maven/maven-plugin-registry/debian/maven-plugin-registry-debian.jar"/>
-            <include name="org/apache/maven/maven-profile/debian/maven-profile-debian.jar"/>
-            <include name="org/apache/maven/maven-project/debian/maven-project-debian.jar"/>
-            <include name="org/apache/maven/maven-repository-metadata/debian/maven-repository-metadata-debian.jar"/>
-            <include name="org/apache/maven/maven-settings/debian/maven-settings-debian.jar"/>
-            <include name="org/apache/maven/reporting/maven-reporting-api/debian/maven-reporting-api-debian.jar"/>
-            <include name="org/apache/maven/wagon/wagon-provider-api/debian/wagon-provider-api-debian.jar"/>
-            <include name="org/apache/maven/wagon/wagon-ssh-common/debian/wagon-ssh-common-debian.jar"/>
-            <include name="org/apache/maven/wagon/wagon-ssh/debian/wagon-ssh-debian.jar"/>
-            <include name="org/codehaus/plexus/plexus-container-default/1.0-alpha/plexus-container-default-1.0-alpha.jar"/>
-            <include name="org/codehaus/plexus/plexus-interactivity-api/debian/plexus-interactivity-api-debian.jar"/>
-            <include name="org/codehaus/plexus/plexus-interpolation/debian/plexus-interpolation-debian.jar"/>
-            <include name="org/codehaus/plexus/plexus-utils/debian/plexus-utils-debian.jar"/>
-            <include name="org/sonatype/plexus/plexus-cipher/debian/plexus-cipher-debian.jar"/>
-            <include name="org/sonatype/plexus/plexus-sec-dispatcher/debian/plexus-sec-dispatcher-debian.jar"/>
-          </fileset>
+          <fileset dir="/usr/share/maven/boot" includes="**"/>
+          <fileset dir="/usr/share/maven/lib" includes="**"/>
         </path>
 
     </target>
